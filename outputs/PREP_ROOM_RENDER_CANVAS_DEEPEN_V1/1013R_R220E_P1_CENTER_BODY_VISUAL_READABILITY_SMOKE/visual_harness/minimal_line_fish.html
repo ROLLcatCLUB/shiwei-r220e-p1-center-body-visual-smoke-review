@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线条小鱼 - R220E-P1 visual smoke</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #273730;
+      --muted: #687b72;
+      --line: #d9e5de;
+      --green: #207966;
+      --green-soft: #e6f4ef;
+      --paper: #fffdf7;
+      --bg: #f2f7f3;
+      --warm: #f7f2e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(35, 121, 102, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 121, 102, .06) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+      color: var(--ink);
+      font: 15px/1.72 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+    .visual-shell {
+      min-height: 100vh;
+      padding: 28px 34px 48px;
+    }
+    .visual-top {
+      max-width: 1040px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #315d51;
+      font-size: 13px;
+    }
+    .visual-top strong {
+      font-size: 19px;
+      color: var(--green);
+    }
+    .visual-note {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .75);
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .nb-workspace {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid #d5e3db;
+      box-shadow: 0 18px 50px rgba(21, 70, 58, .13);
+      padding: 40px 58px 50px;
+    }
+    .r220e-document-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+    }
+    .r220e-document-head h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .r220e-candidate-status,
+    .r220e-compact-badge,
+    .r220e-confirm-inline {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid #c9ddd4;
+      background: var(--green-soft);
+      color: #217664;
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 2px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .r220e-candidate-status { margin: 2px 0 0; }
+    .r220e-confirm-inline {
+      margin-left: 8px;
+      border-color: #ead7a5;
+      background: #fff6d8;
+      color: #8a650e;
+      font-weight: 600;
+    }
+    .r220e-doc-section {
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0 22px;
+    }
+    .r220e-section-head,
+    .r220e-episode-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .r220e-section-head h2,
+    .r220e-episode-head h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .r220e-section-head h2 { font-size: 20px; }
+    .r220e-episode-head h3 { font-size: 18px; }
+    .r220e-section-list {
+      margin: 0;
+      padding-left: 30px;
+    }
+    .r220e-section-list li { margin: 6px 0; }
+    .r220e-readable-process {
+      display: grid;
+      gap: 18px;
+    }
+    .r220e-process-episode {
+      padding: 18px 0 16px;
+      border-bottom: 1px dashed #ceddd4;
+    }
+    .r220e-episode-core {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 7px 14px;
+      margin: 0;
+    }
+    .r220e-episode-core dt {
+      color: var(--green);
+      font-weight: 800;
+    }
+    .r220e-episode-core dd {
+      margin: 0;
+      min-width: 0;
+    }
+    details.r220e-folded-detail {
+      margin-top: 12px;
+      border-left: 3px solid #8dc5b7;
+      background: rgba(236, 246, 242, .6);
+      padding: 8px 12px 10px;
+    }
+    details.r220e-folded-detail summary {
+      cursor: pointer;
+      color: #277966;
+      font-weight: 800;
+    }
+    .r220e-folded-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 20px;
+      margin-top: 8px;
+      color: #41564e;
+      font-size: 14px;
+    }
+    .r220e-folded-grid p { margin: 0; }
+    .r220e-confirm-group {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #ddba63;
+      background: var(--warm);
+    }
+    .r220e-confirm-group h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #6d5210;
+    }
+    .r220e-confirm-group ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    @media (max-width: 760px) {
+      .visual-shell { padding: 14px; }
+      .nb-workspace { padding: 24px 20px; }
+      .r220e-document-head,
+      .r220e-section-head,
+      .r220e-episode-head,
+      .visual-top {
+        align-items: start;
+        flex-direction: column;
+      }
+      .r220e-episode-core { grid-template-columns: 1fr; }
+      .r220e-folded-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body data-r220e-p1-visual-harness="true">
+  <main class="visual-shell" data-visual-smoke-only="true">
+    <div class="visual-top">
+      <strong>备课室中间正文视觉 smoke</strong>
+      <span class="visual-note">只读片段截图，不接真实 route</span>
+    </div>
+    <div class="nb-workspace r220e-center-body" data-render-surface="lesson-body" data-render-slot="lesson-body" data-r220e-center-body-readonly="true" data-r220e-sample-id="minimal_line_fish">
+  <article class="nb-doc r220e-lesson-document" data-render-surface="lesson-document" data-r220e-readonly-document="true">
+    <header class="r220e-document-head">
+      <h1>线条小鱼</h1>
+      <p class="r220e-candidate-status" data-r220e-candidate-status="true">系统候选，需教师确认</p>
+    </header>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="basis" data-r220e-section="basis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">一、本课依据</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>本课以观察鱼身上的线条为起点，通过示范波浪线、折线、点线等装饰方法，让学生完成一条有线条变化的小鱼。</li>
+    <li>原文虽简短，但已提供观察、示范、创作三个核心环节，可作为极简教案的教学过程依据。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="analysis" data-r220e-section="analysis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">二、学情分析</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>二年级学生能辨认常见线条，也愿意画鱼，但容易把装饰变成随意填满，较少观察线条位置、方向和重复规律。</li>
+    <li>本课需要帮助学生先说出鱼身上的线条发现，再把一种或两种线条有意识地用在鱼的身体、鱼鳍或尾巴上。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="goals" data-r220e-section="goals">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">三、教学目标</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>学生能观察鱼的图片，说出鱼身上至少一种线条形态或排列特点。</li>
+    <li>学生能选择波浪线、折线、点线等线条装饰一条小鱼，并让线条与鱼身部位有对应关系。</li>
+    <li>学生能向同伴说明自己用了哪一种线条装饰鱼的哪个部位。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="keypoints" data-r220e-section="keypoints">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">四、教学重难点</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>重点：观察鱼身线条，并用不同线条装饰鱼的身体、鱼鳍或尾巴。</li>
+    <li>难点：让线条有方向、有重复或有变化，并能和鱼身部位对应，而不是无目的地填满画面。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="preparation" data-r220e-section="preparation">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">五、教学准备</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>教师准备鱼类图片、线条示范图、波浪线/折线/点线局部示范和学生练习纸。</li>
+    <li>学生准备彩笔、勾线笔或油画棒，课堂中保留一处可修改的线条练习空间。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" id="nb-section-teaching-process" data-render-slot="teaching-process" data-r220e-section="teaching-process">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">六、教学过程</h2>
+  </div>
+  <div class="nb-readable-process r220e-readable-process" data-render-slot="teaching-process-episodes">
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>1. 看鱼图片，说一说鱼身上有什么线条</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能观察鱼身、鱼鳍和尾巴，说出一种看到的线条。</dd>
+    <dt>教师组织</dt><dd>出示鱼的图片，先让学生找线条位置，再把学生发现归为波浪线、弧线、点线或重复线。</dd>
+    <dt>学生学习</dt><dd>观察图片，指认鱼身上的线条，并尝试说出线条像什么。</dd>
+    <dt>关键话术</dt><dd>你看到的这条线在鱼的哪个部位？它是直直的、弯弯的，还是一排小点连起来的？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能指出鱼身上的一个线条位置并说出线条形态。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>看鱼图片，说一说鱼身上有什么线条</p>
+      <p><strong>材料</strong>鱼类图片、线条示范图、练习纸和彩笔</p>
+      <p><strong>支架</strong>用“线条名称-装饰部位-变化方式”帮助学生说清线条选择。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先问线条在哪里，再问为什么这样装饰。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>2. 教师示范用波浪线、折线、点线装饰鱼</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能看懂三种线条装饰方法，并选择一种用于自己的小鱼。</dd>
+    <dt>教师组织</dt><dd>在鱼形轮廓中分别示范波浪线、折线和点线，强调线条可以顺着身体方向排列。</dd>
+    <dt>学生学习</dt><dd>观察示范，选择自己想尝试的一种线条。</dd>
+    <dt>关键话术</dt><dd>同样是装饰鱼身，波浪线会让小鱼像在水里游，折线会更有节奏，你想选哪一种？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出自己准备使用的线条类型。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>教师示范用波浪线、折线、点线装饰鱼</p>
+      <p><strong>材料</strong>鱼类图片、线条示范图、练习纸和彩笔</p>
+      <p><strong>支架</strong>用“线条名称-装饰部位-变化方式”帮助学生说清线条选择。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先问线条在哪里，再问为什么这样装饰。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>3. 学生画一条线条小鱼</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能完成一条有线条变化的小鱼，并说明一处装饰选择。</dd>
+    <dt>教师组织</dt><dd>巡视时看学生是否把线条放在合适部位，提醒不要把所有线条挤在一起。</dd>
+    <dt>学生学习</dt><dd>画出小鱼并用线条装饰鱼身、鱼鳍或尾巴。</dd>
+    <dt>关键话术</dt><dd>你这条线准备装饰鱼的哪里？如果这里太密，旁边是不是可以留一点空，让线条更清楚？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>作品中至少有一处清楚的线条装饰，并能说出所用线条名称。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>学生画一条线条小鱼</p>
+      <p><strong>材料</strong>鱼类图片、线条示范图、练习纸和彩笔</p>
+      <p><strong>支架</strong>用“线条名称-装饰部位-变化方式”帮助学生说清线条选择。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先问线条在哪里，再问为什么这样装饰。</p>
+    </div>
+  </details>
+</article>
+  </div>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="assessment" data-r220e-section="assessment">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">七、学习单与评价</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>观察证据：学生能指出鱼身、鱼鳍或尾巴上的一种线条。</li>
+    <li>作品证据：小鱼作品中有清楚的线条装饰部位。</li>
+    <li>表达证据：学生能说出自己用了哪一种线条。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="teacher-confirm-items" data-r220e-section="teacher-confirm-items">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">八、待教师确认项</h2>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="必须确认">
+    <h3>必须确认</h3>
+    <ol>
+      <li>教材版本、册次、页码和学校实际进度需教师确认。</li>
+      <li>本课材料、工具数量和安全要求需按班级实际确认。</li>
+    </ol>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="建议确认">
+    <h3>建议确认</h3>
+    <ol>
+      <li>教学目标、重难点和准备为系统候选，需教师按学生情况调整。</li>
+      <li>关键话术为系统建议，需教师按自己的课堂语言改写。</li>
+      <li>鱼图片和线条示范图需按二年级学生观察能力选择。</li>
+    </ol>
+  </div>
+  <details class="r220e-folded-detail" data-r220e-confirm-diagnostic-collapsed="true">
+    <summary>可折叠诊断</summary>
+    <ol>
+      <li>本轮仅生成教师可读候选快照，不进入正式备课本。</li>
+    </ol>
+  </details>
+</section>
+  </article>
+</div>
+  </main>
+</body>
+</html>
