@@ -1,0 +1,415 @@
+{
+  "stage": "1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE",
+  "browser": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "samples": [
+    {
+      "sample_id": "real_downpour_docx",
+      "lesson_label": "下雨啰",
+      "visual_harness": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/visual_harness/real_downpour_docx.html",
+      "screenshot": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/screenshots/real_downpour_docx.png",
+      "image": {
+        "width": 1416,
+        "height": 3592,
+        "file_size_bytes": 427390,
+        "sampled_color_count": 693,
+        "sampled_luminance_extrema": [
+          203,
+          255
+        ],
+        "nonblank": true
+      },
+      "runtime_dom_metrics": {
+        "bodyTextLength": 2207,
+        "documentHeight": 3592,
+        "viewportHeight": 1433,
+        "viewportWidth": 1416,
+        "candidateStatusCount": 1,
+        "compactBadgeCount": 12,
+        "detailsCount": 7,
+        "detailsOpenCount": 0,
+        "episodeCount": 6,
+        "episodeRects": [
+          {
+            "top": 1071,
+            "bottom": 1360,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1378,
+            "bottom": 1667,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1685,
+            "bottom": 1973,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1991,
+            "bottom": 2280,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 2298,
+            "bottom": 2587,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 2605,
+            "bottom": 2894,
+            "height": 289,
+            "width": 922
+          }
+        ],
+        "processRect": {
+          "top": 1007,
+          "bottom": 2917,
+          "height": 1910,
+          "width": 922
+        },
+        "coreLabelTextHits": 5,
+        "confirmGroupHits": 3,
+        "oldStaticHits": [],
+        "engineeringHits": [],
+        "fieldTableHints": []
+      },
+      "checks": {
+        "screenshot_created": true,
+        "candidate_status_once": true,
+        "details_default_collapsed": true,
+        "teaching_process_structure_present": true,
+        "teacher_confirm_items_grouped": true,
+        "old_static_body_absent": true,
+        "engineering_terms_absent": true,
+        "field_table_absent": true,
+        "right_rail_not_participating": true,
+        "bottom_xiaojiao_not_participating": true
+      }
+    },
+    {
+      "sample_id": "numbered_colon_old_shoes",
+      "lesson_label": "旧鞋 / 足下生辉",
+      "visual_harness": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/visual_harness/numbered_colon_old_shoes.html",
+      "screenshot": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/screenshots/numbered_colon_old_shoes.png",
+      "image": {
+        "width": 1416,
+        "height": 3260,
+        "file_size_bytes": 394230,
+        "sampled_color_count": 713,
+        "sampled_luminance_extrema": [
+          186,
+          255
+        ],
+        "nonblank": true
+      },
+      "runtime_dom_metrics": {
+        "bodyTextLength": 2008,
+        "documentHeight": 3260,
+        "viewportHeight": 1433,
+        "viewportWidth": 1416,
+        "candidateStatusCount": 1,
+        "compactBadgeCount": 11,
+        "detailsCount": 6,
+        "detailsOpenCount": 0,
+        "episodeCount": 5,
+        "episodeRects": [
+          {
+            "top": 1045,
+            "bottom": 1334,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1352,
+            "bottom": 1641,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1659,
+            "bottom": 1948,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1966,
+            "bottom": 2254,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 2272,
+            "bottom": 2561,
+            "height": 289,
+            "width": 922
+          }
+        ],
+        "processRect": {
+          "top": 981,
+          "bottom": 2584,
+          "height": 1603,
+          "width": 922
+        },
+        "coreLabelTextHits": 5,
+        "confirmGroupHits": 3,
+        "oldStaticHits": [],
+        "engineeringHits": [],
+        "fieldTableHints": []
+      },
+      "checks": {
+        "screenshot_created": true,
+        "candidate_status_once": true,
+        "details_default_collapsed": true,
+        "teaching_process_structure_present": true,
+        "teacher_confirm_items_grouped": true,
+        "old_static_body_absent": true,
+        "engineering_terms_absent": true,
+        "field_table_absent": true,
+        "right_rail_not_participating": true,
+        "bottom_xiaojiao_not_participating": true
+      }
+    },
+    {
+      "sample_id": "plain_segment_weaving",
+      "lesson_label": "穿穿编编",
+      "visual_harness": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/visual_harness/plain_segment_weaving.html",
+      "screenshot": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/screenshots/plain_segment_weaving.png",
+      "image": {
+        "width": 1416,
+        "height": 3566,
+        "file_size_bytes": 409644,
+        "sampled_color_count": 699,
+        "sampled_luminance_extrema": [
+          201,
+          255
+        ],
+        "nonblank": true
+      },
+      "runtime_dom_metrics": {
+        "bodyTextLength": 2022,
+        "documentHeight": 3566,
+        "viewportHeight": 1433,
+        "viewportWidth": 1416,
+        "candidateStatusCount": 1,
+        "compactBadgeCount": 12,
+        "detailsCount": 7,
+        "detailsOpenCount": 0,
+        "episodeCount": 6,
+        "episodeRects": [
+          {
+            "top": 1045,
+            "bottom": 1334,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1352,
+            "bottom": 1641,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1659,
+            "bottom": 1948,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1966,
+            "bottom": 2254,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 2272,
+            "bottom": 2561,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 2579,
+            "bottom": 2868,
+            "height": 289,
+            "width": 922
+          }
+        ],
+        "processRect": {
+          "top": 981,
+          "bottom": 2891,
+          "height": 1910,
+          "width": 922
+        },
+        "coreLabelTextHits": 5,
+        "confirmGroupHits": 3,
+        "oldStaticHits": [],
+        "engineeringHits": [],
+        "fieldTableHints": []
+      },
+      "checks": {
+        "screenshot_created": true,
+        "candidate_status_once": true,
+        "details_default_collapsed": true,
+        "teaching_process_structure_present": true,
+        "teacher_confirm_items_grouped": true,
+        "old_static_body_absent": true,
+        "engineering_terms_absent": true,
+        "field_table_absent": true,
+        "right_rail_not_participating": true,
+        "bottom_xiaojiao_not_participating": true
+      }
+    },
+    {
+      "sample_id": "table_rain_umbrella",
+      "lesson_label": "雨伞图案设计",
+      "visual_harness": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/visual_harness/table_rain_umbrella.html",
+      "screenshot": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/screenshots/table_rain_umbrella.png",
+      "image": {
+        "width": 1416,
+        "height": 2953,
+        "file_size_bytes": 325824,
+        "sampled_color_count": 703,
+        "sampled_luminance_extrema": [
+          170,
+          255
+        ],
+        "nonblank": true
+      },
+      "runtime_dom_metrics": {
+        "bodyTextLength": 1528,
+        "documentHeight": 2953,
+        "viewportHeight": 1433,
+        "viewportWidth": 1416,
+        "candidateStatusCount": 1,
+        "compactBadgeCount": 10,
+        "detailsCount": 5,
+        "detailsOpenCount": 0,
+        "episodeCount": 4,
+        "episodeRects": [
+          {
+            "top": 1045,
+            "bottom": 1334,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1352,
+            "bottom": 1641,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1659,
+            "bottom": 1948,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1966,
+            "bottom": 2254,
+            "height": 289,
+            "width": 922
+          }
+        ],
+        "processRect": {
+          "top": 981,
+          "bottom": 2277,
+          "height": 1296,
+          "width": 922
+        },
+        "coreLabelTextHits": 5,
+        "confirmGroupHits": 3,
+        "oldStaticHits": [],
+        "engineeringHits": [],
+        "fieldTableHints": []
+      },
+      "checks": {
+        "screenshot_created": true,
+        "candidate_status_once": true,
+        "details_default_collapsed": true,
+        "teaching_process_structure_present": true,
+        "teacher_confirm_items_grouped": true,
+        "old_static_body_absent": true,
+        "engineering_terms_absent": true,
+        "field_table_absent": true,
+        "right_rail_not_participating": true,
+        "bottom_xiaojiao_not_participating": true
+      }
+    },
+    {
+      "sample_id": "minimal_line_fish",
+      "lesson_label": "线条小鱼",
+      "visual_harness": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/visual_harness/minimal_line_fish.html",
+      "screenshot": "outputs/PREP_ROOM_RENDER_CANVAS_DEEPEN_V1/1013R_R220E_P1_CENTER_BODY_VISUAL_READABILITY_SMOKE/screenshots/minimal_line_fish.png",
+      "image": {
+        "width": 1416,
+        "height": 2646,
+        "file_size_bytes": 300463,
+        "sampled_color_count": 665,
+        "sampled_luminance_extrema": [
+          185,
+          255
+        ],
+        "nonblank": true
+      },
+      "runtime_dom_metrics": {
+        "bodyTextLength": 1435,
+        "documentHeight": 2646,
+        "viewportHeight": 1433,
+        "viewportWidth": 1416,
+        "candidateStatusCount": 1,
+        "compactBadgeCount": 9,
+        "detailsCount": 4,
+        "detailsOpenCount": 0,
+        "episodeCount": 3,
+        "episodeRects": [
+          {
+            "top": 1045,
+            "bottom": 1334,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1352,
+            "bottom": 1641,
+            "height": 289,
+            "width": 922
+          },
+          {
+            "top": 1659,
+            "bottom": 1948,
+            "height": 289,
+            "width": 922
+          }
+        ],
+        "processRect": {
+          "top": 981,
+          "bottom": 1971,
+          "height": 990,
+          "width": 922
+        },
+        "coreLabelTextHits": 5,
+        "confirmGroupHits": 3,
+        "oldStaticHits": [],
+        "engineeringHits": [],
+        "fieldTableHints": []
+      },
+      "checks": {
+        "screenshot_created": true,
+        "candidate_status_once": true,
+        "details_default_collapsed": true,
+        "teaching_process_structure_present": true,
+        "teacher_confirm_items_grouped": true,
+        "old_static_body_absent": true,
+        "engineering_terms_absent": true,
+        "field_table_absent": true,
+        "right_rail_not_participating": true,
+        "bottom_xiaojiao_not_participating": true
+      }
+    }
+  ]
+}
