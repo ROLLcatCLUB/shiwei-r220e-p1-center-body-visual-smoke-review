@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>旧鞋 / 足下生辉 - R220E-P1 visual smoke</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #273730;
+      --muted: #687b72;
+      --line: #d9e5de;
+      --green: #207966;
+      --green-soft: #e6f4ef;
+      --paper: #fffdf7;
+      --bg: #f2f7f3;
+      --warm: #f7f2e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(35, 121, 102, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 121, 102, .06) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+      color: var(--ink);
+      font: 15px/1.72 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+    .visual-shell {
+      min-height: 100vh;
+      padding: 28px 34px 48px;
+    }
+    .visual-top {
+      max-width: 1040px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #315d51;
+      font-size: 13px;
+    }
+    .visual-top strong {
+      font-size: 19px;
+      color: var(--green);
+    }
+    .visual-note {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .75);
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .nb-workspace {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid #d5e3db;
+      box-shadow: 0 18px 50px rgba(21, 70, 58, .13);
+      padding: 40px 58px 50px;
+    }
+    .r220e-document-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+    }
+    .r220e-document-head h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .r220e-candidate-status,
+    .r220e-compact-badge,
+    .r220e-confirm-inline {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid #c9ddd4;
+      background: var(--green-soft);
+      color: #217664;
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 2px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .r220e-candidate-status { margin: 2px 0 0; }
+    .r220e-confirm-inline {
+      margin-left: 8px;
+      border-color: #ead7a5;
+      background: #fff6d8;
+      color: #8a650e;
+      font-weight: 600;
+    }
+    .r220e-doc-section {
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0 22px;
+    }
+    .r220e-section-head,
+    .r220e-episode-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .r220e-section-head h2,
+    .r220e-episode-head h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .r220e-section-head h2 { font-size: 20px; }
+    .r220e-episode-head h3 { font-size: 18px; }
+    .r220e-section-list {
+      margin: 0;
+      padding-left: 30px;
+    }
+    .r220e-section-list li { margin: 6px 0; }
+    .r220e-readable-process {
+      display: grid;
+      gap: 18px;
+    }
+    .r220e-process-episode {
+      padding: 18px 0 16px;
+      border-bottom: 1px dashed #ceddd4;
+    }
+    .r220e-episode-core {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 7px 14px;
+      margin: 0;
+    }
+    .r220e-episode-core dt {
+      color: var(--green);
+      font-weight: 800;
+    }
+    .r220e-episode-core dd {
+      margin: 0;
+      min-width: 0;
+    }
+    details.r220e-folded-detail {
+      margin-top: 12px;
+      border-left: 3px solid #8dc5b7;
+      background: rgba(236, 246, 242, .6);
+      padding: 8px 12px 10px;
+    }
+    details.r220e-folded-detail summary {
+      cursor: pointer;
+      color: #277966;
+      font-weight: 800;
+    }
+    .r220e-folded-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 20px;
+      margin-top: 8px;
+      color: #41564e;
+      font-size: 14px;
+    }
+    .r220e-folded-grid p { margin: 0; }
+    .r220e-confirm-group {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #ddba63;
+      background: var(--warm);
+    }
+    .r220e-confirm-group h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #6d5210;
+    }
+    .r220e-confirm-group ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    @media (max-width: 760px) {
+      .visual-shell { padding: 14px; }
+      .nb-workspace { padding: 24px 20px; }
+      .r220e-document-head,
+      .r220e-section-head,
+      .r220e-episode-head,
+      .visual-top {
+        align-items: start;
+        flex-direction: column;
+      }
+      .r220e-episode-core { grid-template-columns: 1fr; }
+      .r220e-folded-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body data-r220e-p1-visual-harness="true">
+  <main class="visual-shell" data-visual-smoke-only="true">
+    <div class="visual-top">
+      <strong>备课室中间正文视觉 smoke</strong>
+      <span class="visual-note">只读片段截图，不接真实 route</span>
+    </div>
+    <div class="nb-workspace r220e-center-body" data-render-surface="lesson-body" data-render-slot="lesson-body" data-r220e-center-body-readonly="true" data-r220e-sample-id="numbered_colon_old_shoes">
+  <article class="nb-doc r220e-lesson-document" data-render-surface="lesson-document" data-r220e-readonly-document="true">
+    <header class="r220e-document-head">
+      <h1>旧鞋 / 足下生辉</h1>
+      <p class="r220e-candidate-status" data-r220e-candidate-status="true">系统候选，需教师确认</p>
+    </header>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="basis" data-r220e-section="basis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">一、本课依据</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>本课依据上传原稿定位为三年级《足下生辉》旧鞋改造设计课，教学主线是把上一课草图转化为旧鞋改造作品。</li>
+    <li>本课学习重心不是鞋的线描观察，而是围绕旧鞋材料、结构、设计意图、设计故事和发布会准备，完成一次设计应用表达。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="analysis" data-r220e-section="analysis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">二、学情分析</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>三年级学生有生活材料改造兴趣，也可能已有上一课草图，但容易把旧鞋制作变成随意装饰，忽略材料选择是否服务设计意图。</li>
+    <li>本课需要持续追问“我想改造成什么、为什么这样选材料、哪里体现设计想法”，帮助学生把制作过程转化为可说明的设计证据。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="goals" data-r220e-section="goals">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">三、教学目标</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>学生能对照上一课草图，说明自己准备把旧鞋改造成什么，并选择与设计意图相匹配的材料或制作方法。</li>
+    <li>学生能在旧鞋作品制作中处理至少一处材料连接、结构稳定或装饰表达问题。</li>
+    <li>学生能用5句话设计故事说明作品对象、解决的问题、材料方法、满意处和改进想法，并为发布会整理作品证据。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="keypoints" data-r220e-section="keypoints">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">四、教学重难点</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>重点：把草图中的设计意图落实到旧鞋材料选择、结构处理和装饰表达中。</li>
+    <li>难点：让学生说清材料方法为什么服务自己的设计，而不是只评价作品是否好看。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="preparation" data-r220e-section="preparation">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">五、教学准备</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>学生准备旧鞋、上一课设计草图、可选装饰材料、故事卡或记录单。</li>
+    <li>教师准备材料连接示例、工具安全提醒、5句话设计故事句式和发布会作品整理要求。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" id="nb-section-teaching-process" data-render-slot="teaching-process" data-r220e-section="teaching-process">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">六、教学过程</h2>
+  </div>
+  <div class="nb-readable-process r220e-readable-process" data-render-slot="teaching-process-episodes">
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>1. 回顾草图与任务确认</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能对照上一课草图，确认今天旧鞋改造的对象和设计意图。</dd>
+    <dt>教师组织</dt><dd>组织学生拿出草图，先说准备改造成什么，再圈出今天最要实现的一处设计重点。</dd>
+    <dt>学生学习</dt><dd>查看草图，说明旧鞋改造方向，并确认一处需要重点完成的设计内容。</dd>
+    <dt>关键话术</dt><dd>今天不是重新想一个作品，而是把草图里的想法做出来。你最想先完成草图里的哪一点？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能拿出草图并说明旧鞋改造方向。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>回顾草图与任务确认</p>
+      <p><strong>材料</strong>旧鞋、上一课草图、材料包、故事卡</p>
+      <p><strong>支架</strong>用“草图想法-材料方法-作品证据”帮助学生避免随意装饰。</p>
+      <p><strong>小教提醒</strong>小教提醒教师持续追问材料选择是否回应草图意图。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>2. 制作路径讨论</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能比较粘贴、包裹、添加、绘制等方法，判断哪一种更适合自己的设计。</dd>
+    <dt>教师组织</dt><dd>引导学生把材料方法和设计意图配对，讨论不同连接方式的稳定性和表现效果。</dd>
+    <dt>学生学习</dt><dd>比较制作路径，说明自己选择某种材料或方法的理由。</dd>
+    <dt>关键话术</dt><dd>如果你想表现这个功能或造型，粘贴、包裹、添加、绘制哪一种更能支持你的想法？为什么？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出一种材料方法和设计意图之间的关系。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>制作路径讨论</p>
+      <p><strong>材料</strong>旧鞋、上一课草图、材料包、故事卡</p>
+      <p><strong>支架</strong>用“草图想法-材料方法-作品证据”帮助学生避免随意装饰。</p>
+      <p><strong>小教提醒</strong>小教提醒教师持续追问材料选择是否回应草图意图。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>3. 旧鞋作品制作</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能根据草图完成旧鞋改造，并在制作中检查结构稳定和材料效果。</dd>
+    <dt>教师组织</dt><dd>巡视材料连接、结构稳定和工具安全，优先追问学生是否仍在回应原设计。</dd>
+    <dt>学生学习</dt><dd>按照草图进行旧鞋改造，遇到连接或装饰问题时说明困难并调整。</dd>
+    <dt>关键话术</dt><dd>现在这一步有没有帮助你实现草图里的设计？如果只是贴上去好看，它和你的想法有什么关系？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>作品能看到旧鞋改造痕迹，并有至少一处材料或结构处理回应草图。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>旧鞋作品制作</p>
+      <p><strong>材料</strong>旧鞋、上一课草图、材料包、故事卡</p>
+      <p><strong>支架</strong>用“草图想法-材料方法-作品证据”帮助学生避免随意装饰。</p>
+      <p><strong>小教提醒</strong>小教提醒教师持续追问材料选择是否回应草图意图。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>4. 5句话设计故事</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能用五句话说明作品对象、问题、材料方法、满意处和改进点。</dd>
+    <dt>教师组织</dt><dd>提供五句话结构，让学生把制作结果转化为发布会可以讲清楚的设计故事。</dd>
+    <dt>学生学习</dt><dd>围绕作品写或说出5句话设计故事，并检查每句话是否有作品证据。</dd>
+    <dt>关键话术</dt><dd>请按五句话说：它是谁、解决什么问题、用了什么材料方法、你最满意哪里、还想改什么。<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生完成故事卡，能对应作品中的材料和结构证据。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>5句话设计故事</p>
+      <p><strong>材料</strong>旧鞋、上一课草图、材料包、故事卡</p>
+      <p><strong>支架</strong>用“草图想法-材料方法-作品证据”帮助学生避免随意装饰。</p>
+      <p><strong>小教提醒</strong>小教提醒教师持续追问材料选择是否回应草图意图。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>5. 新鞋发布会准备</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能整理作品和故事卡，为下一环节展示发布做好准备。</dd>
+    <dt>教师组织</dt><dd>组织学生检查作品、故事卡和展示顺序，提醒发布会要用作品证据支持介绍。</dd>
+    <dt>学生学习</dt><dd>整理旧鞋作品与故事卡，准备展示时的介绍顺序。</dd>
+    <dt>关键话术</dt><dd>发布会上不要只展示作品，请把故事卡放在旁边，让别人知道你的设计从哪里来。<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能准备好作品和故事卡，并说出展示时先讲哪一点。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>新鞋发布会准备</p>
+      <p><strong>材料</strong>旧鞋、上一课草图、材料包、故事卡</p>
+      <p><strong>支架</strong>用“草图想法-材料方法-作品证据”帮助学生避免随意装饰。</p>
+      <p><strong>小教提醒</strong>小教提醒教师持续追问材料选择是否回应草图意图。</p>
+    </div>
+  </details>
+</article>
+  </div>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="assessment" data-r220e-section="assessment">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">七、学习单与评价</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>过程证据：学生能对照草图选择材料和制作方法。</li>
+    <li>作品证据：旧鞋作品中能看到材料选择、结构处理或装饰表达回应设计意图。</li>
+    <li>表达证据：5句话设计故事能说明对象、问题、材料方法、满意处和改进点。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="teacher-confirm-items" data-r220e-section="teacher-confirm-items">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">八、待教师确认项</h2>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="必须确认">
+    <h3>必须确认</h3>
+    <ol>
+      <li>教材版本、册次、页码和学校实际进度需教师确认。</li>
+      <li>本课材料、工具数量和安全要求需按班级实际确认。</li>
+      <li>旧鞋、草图、故事卡和发布会安排需由教师确认是否齐备。</li>
+    </ol>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="建议确认">
+    <h3>建议确认</h3>
+    <ol>
+      <li>教学目标、重难点和准备为系统候选，需教师按学生情况调整。</li>
+      <li>关键话术为系统建议，需教师按自己的课堂语言改写。</li>
+    </ol>
+  </div>
+  <details class="r220e-folded-detail" data-r220e-confirm-diagnostic-collapsed="true">
+    <summary>可折叠诊断</summary>
+    <ol>
+      <li>本轮仅生成教师可读候选快照，不进入正式备课本。</li>
+    </ol>
+  </details>
+</section>
+  </article>
+</div>
+  </main>
+</body>
+</html>
