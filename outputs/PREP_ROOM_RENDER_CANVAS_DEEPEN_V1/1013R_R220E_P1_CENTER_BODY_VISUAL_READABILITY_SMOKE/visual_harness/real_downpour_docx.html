@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>下雨啰 - R220E-P1 visual smoke</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #273730;
+      --muted: #687b72;
+      --line: #d9e5de;
+      --green: #207966;
+      --green-soft: #e6f4ef;
+      --paper: #fffdf7;
+      --bg: #f2f7f3;
+      --warm: #f7f2e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(35, 121, 102, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 121, 102, .06) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+      color: var(--ink);
+      font: 15px/1.72 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+    .visual-shell {
+      min-height: 100vh;
+      padding: 28px 34px 48px;
+    }
+    .visual-top {
+      max-width: 1040px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #315d51;
+      font-size: 13px;
+    }
+    .visual-top strong {
+      font-size: 19px;
+      color: var(--green);
+    }
+    .visual-note {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .75);
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .nb-workspace {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid #d5e3db;
+      box-shadow: 0 18px 50px rgba(21, 70, 58, .13);
+      padding: 40px 58px 50px;
+    }
+    .r220e-document-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+    }
+    .r220e-document-head h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .r220e-candidate-status,
+    .r220e-compact-badge,
+    .r220e-confirm-inline {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid #c9ddd4;
+      background: var(--green-soft);
+      color: #217664;
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 2px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .r220e-candidate-status { margin: 2px 0 0; }
+    .r220e-confirm-inline {
+      margin-left: 8px;
+      border-color: #ead7a5;
+      background: #fff6d8;
+      color: #8a650e;
+      font-weight: 600;
+    }
+    .r220e-doc-section {
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0 22px;
+    }
+    .r220e-section-head,
+    .r220e-episode-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .r220e-section-head h2,
+    .r220e-episode-head h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .r220e-section-head h2 { font-size: 20px; }
+    .r220e-episode-head h3 { font-size: 18px; }
+    .r220e-section-list {
+      margin: 0;
+      padding-left: 30px;
+    }
+    .r220e-section-list li { margin: 6px 0; }
+    .r220e-readable-process {
+      display: grid;
+      gap: 18px;
+    }
+    .r220e-process-episode {
+      padding: 18px 0 16px;
+      border-bottom: 1px dashed #ceddd4;
+    }
+    .r220e-episode-core {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 7px 14px;
+      margin: 0;
+    }
+    .r220e-episode-core dt {
+      color: var(--green);
+      font-weight: 800;
+    }
+    .r220e-episode-core dd {
+      margin: 0;
+      min-width: 0;
+    }
+    details.r220e-folded-detail {
+      margin-top: 12px;
+      border-left: 3px solid #8dc5b7;
+      background: rgba(236, 246, 242, .6);
+      padding: 8px 12px 10px;
+    }
+    details.r220e-folded-detail summary {
+      cursor: pointer;
+      color: #277966;
+      font-weight: 800;
+    }
+    .r220e-folded-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 20px;
+      margin-top: 8px;
+      color: #41564e;
+      font-size: 14px;
+    }
+    .r220e-folded-grid p { margin: 0; }
+    .r220e-confirm-group {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #ddba63;
+      background: var(--warm);
+    }
+    .r220e-confirm-group h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #6d5210;
+    }
+    .r220e-confirm-group ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    @media (max-width: 760px) {
+      .visual-shell { padding: 14px; }
+      .nb-workspace { padding: 24px 20px; }
+      .r220e-document-head,
+      .r220e-section-head,
+      .r220e-episode-head,
+      .visual-top {
+        align-items: start;
+        flex-direction: column;
+      }
+      .r220e-episode-core { grid-template-columns: 1fr; }
+      .r220e-folded-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body data-r220e-p1-visual-harness="true">
+  <main class="visual-shell" data-visual-smoke-only="true">
+    <div class="visual-top">
+      <strong>备课室中间正文视觉 smoke</strong>
+      <span class="visual-note">只读片段截图，不接真实 route</span>
+    </div>
+    <div class="nb-workspace r220e-center-body" data-render-surface="lesson-body" data-render-slot="lesson-body" data-r220e-center-body-readonly="true" data-r220e-sample-id="real_downpour_docx">
+  <article class="nb-doc r220e-lesson-document" data-render-surface="lesson-document" data-r220e-readonly-document="true">
+    <header class="r220e-document-head">
+      <h1>下雨啰</h1>
+      <p class="r220e-candidate-status" data-r220e-candidate-status="true">系统候选，需教师确认</p>
+    </header>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="basis" data-r220e-section="basis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">一、本课依据</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>本课以雨天经验、雨的线条变化和诗意感受为学习起点，引导学生把看见的雨、听见的雨和心里的雨转化为线描雨景。</li>
+    <li>原文已提供课堂导入、观察雨、诗词引入、线描示范、线描练习和分享小结六个环节，可作为本课教学过程的主要依据。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="analysis" data-r220e-section="analysis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">二、学情分析</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>四年级学生已有基本线条表现经验，能描述雨天感受，但容易停留在“下雨了”的生活描述，难以把细雨、暴雨、雷阵雨等差异转化为线条疏密、方向和节奏。</li>
+    <li>本课难点不在是否会画雨，而在能否用观察到的线条变化表现不同雨景情绪，并在分享时说清自己选择某种线条的理由。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="goals" data-r220e-section="goals">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">三、教学目标</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>学生能观察不同类型雨的图片，说出至少两种雨在线条方向、疏密或节奏上的差异。</li>
+    <li>学生能用细头水笔在线稿或画面中表现一种雨景，并说明一处线条处理与雨的感受之间的关系。</li>
+    <li>学生能在分享中听取同伴建议，完成一处线条、画面节奏或情感表达的调整。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="keypoints" data-r220e-section="keypoints">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">四、教学重难点</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>重点：观察雨的形态差异，并用长短、疏密、方向和节奏不同的线条表现雨景。</li>
+    <li>难点：把雨天情绪和诗意感受转化为画面中的线条组织，而不是只画相同的斜线。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="preparation" data-r220e-section="preparation">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">五、教学准备</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>教师准备不同雨景图片、雨相关诗句或童诗、线描示范材料和雨景学习单。</li>
+    <li>学生准备细头水笔、铅笔或勾线笔，并保留一张可修改的雨景练习纸。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" id="nb-section-teaching-process" data-render-slot="teaching-process" data-r220e-section="teaching-process">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">六、教学过程</h2>
+  </div>
+  <div class="nb-readable-process r220e-readable-process" data-render-slot="teaching-process-episodes">
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>1. 课堂导入</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能说出自己对雨天的一种真实感受，并把感受和画面表现联系起来。</dd>
+    <dt>教师组织</dt><dd>从“你喜欢雨天吗”进入，追问理由，把学生的生活感受板书成安静、有趣、急促、清凉等关键词。</dd>
+    <dt>学生学习</dt><dd>回忆雨天经验，说出喜欢或不喜欢的理由，并听同伴补充不同感受。</dd>
+    <dt>关键话术</dt><dd>你说雨天很安静，那画面里的线条可以怎样安静下来？如果是暴雨，线条又会有什么变化？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能用一个情绪词或生活场景说明自己对雨天的感受。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>课堂导入</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>2. 观察雨</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能比较细雨、暴雨、雷阵雨的视觉差异，并说出线条表现的一个选择。</dd>
+    <dt>教师组织</dt><dd>用图片对比不同雨势，引导学生从线条方向、长短、密度和画面节奏观察，而不是只说“雨很大”。</dd>
+    <dt>学生学习</dt><dd>观察图片，指出一种雨的线条特点，并尝试说出适合用怎样的线表现。</dd>
+    <dt>关键话术</dt><dd>这张图里的雨为什么看起来更急？你看到的是线更密、方向更斜，还是节奏更乱？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出一种雨势对应的线条特点。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>观察雨</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>3. 诗词引入</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能从诗句或童诗中捕捉雨的情绪，并选择一种线条节奏回应这种情绪。</dd>
+    <dt>教师组织</dt><dd>朗读雨的诗句，让学生先听感受，再把诗意词语转成画面线条的轻重和疏密。</dd>
+    <dt>学生学习</dt><dd>听读诗句，说出雨给人的感觉，并尝试把感觉说成线条变化。</dd>
+    <dt>关键话术</dt><dd>如果这句诗里的雨是轻轻的，你会让线条变短、变淡，还是让线之间留出更多空隙？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能用一句话说明诗意感受和线条选择的关系。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>诗词引入</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>4. 线描示范</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能看懂线描表现雨景的关键步骤，并判断自己要表现哪一种雨。</dd>
+    <dt>教师组织</dt><dd>示范用不同线条表现雨势，同时提醒先定雨的类型，再处理背景、人物或景物的关系。</dd>
+    <dt>学生学习</dt><dd>观察示范，记录一种自己准备尝试的线条方法。</dd>
+    <dt>关键话术</dt><dd>我不是示范唯一画法，而是在示范一种选择：先确定雨的感觉，再决定线条怎么走。<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出自己准备使用的一种线条方法。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>线描示范</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>5. 线描练习</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能用线条完成一幅雨景练习，并让画面至少一处体现雨的类型或情绪。</dd>
+    <dt>教师组织</dt><dd>巡视时先问学生画的是哪种雨，再看线条是否支持这个判断，必要时示范局部修改。</dd>
+    <dt>学生学习</dt><dd>完成雨景线描练习，边画边调整线条疏密、方向和节奏。</dd>
+    <dt>关键话术</dt><dd>你画的是细雨还是急雨？现在这组线条能让别人看出来吗？要不要在这一块做疏密变化？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>作品中能看到至少一处有意识的线条疏密、方向或节奏处理。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>线描练习</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>6. 分享小结</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能指着作品说明一处线条选择，并根据建议提出一处可修改点。</dd>
+    <dt>教师组织</dt><dd>组织学生用“我画的是……我用了……因为……”进行分享，再让同伴给出一条具体建议。</dd>
+    <dt>学生学习</dt><dd>展示作品，说出线条选择和雨景感受之间的关系，并记录修改建议。</dd>
+    <dt>关键话术</dt><dd>请你不要只说好看，说一说这组线条为什么像你想表现的那种雨。<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能用作品中的一处线条作为表达雨景感受的证据。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>分享小结</p>
+      <p><strong>材料</strong>雨景图片、线描示范、雨景学习单</p>
+      <p><strong>支架</strong>用“我看到的雨是……所以我用……”帮助学生把观察转成线条选择。</p>
+      <p><strong>小教提醒</strong>小教只提示教师追问线条证据，不替学生评价作品好坏。</p>
+    </div>
+  </details>
+</article>
+  </div>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="assessment" data-r220e-section="assessment">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">七、学习单与评价</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>观察证据：学生能说出雨势与线条方向、疏密或节奏之间的关系。</li>
+    <li>作品证据：画面中至少有一处线条处理能表现雨的类型或情绪。</li>
+    <li>表达证据：学生能指着作品说明一处线条选择。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="teacher-confirm-items" data-r220e-section="teacher-confirm-items">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">八、待教师确认项</h2>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="必须确认">
+    <h3>必须确认</h3>
+    <ol>
+      <li>教材版本、册次、页码和学校实际进度需教师确认。</li>
+      <li>本课材料、工具数量和安全要求需按班级实际确认。</li>
+    </ol>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="建议确认">
+    <h3>建议确认</h3>
+    <ol>
+      <li>教学目标、重难点和准备为系统候选，需教师按学生情况调整。</li>
+      <li>关键话术为系统建议，需教师按自己的课堂语言改写。</li>
+      <li>诗句或童诗材料需由教师按年级和教材版本确认。</li>
+    </ol>
+  </div>
+  <details class="r220e-folded-detail" data-r220e-confirm-diagnostic-collapsed="true">
+    <summary>可折叠诊断</summary>
+    <ol>
+      <li>本轮仅生成教师可读候选快照，不进入正式备课本。</li>
+    </ol>
+  </details>
+</section>
+  </article>
+</div>
+  </main>
+</body>
+</html>
