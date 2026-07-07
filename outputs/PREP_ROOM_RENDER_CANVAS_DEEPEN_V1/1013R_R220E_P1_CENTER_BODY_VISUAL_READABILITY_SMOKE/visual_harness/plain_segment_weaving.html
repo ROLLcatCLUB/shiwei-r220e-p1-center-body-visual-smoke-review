@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>穿穿编编 - R220E-P1 visual smoke</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #273730;
+      --muted: #687b72;
+      --line: #d9e5de;
+      --green: #207966;
+      --green-soft: #e6f4ef;
+      --paper: #fffdf7;
+      --bg: #f2f7f3;
+      --warm: #f7f2e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(35, 121, 102, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 121, 102, .06) 1px, transparent 1px),
+        var(--bg);
+      background-size: 22px 22px;
+      color: var(--ink);
+      font: 15px/1.72 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+    .visual-shell {
+      min-height: 100vh;
+      padding: 28px 34px 48px;
+    }
+    .visual-top {
+      max-width: 1040px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #315d51;
+      font-size: 13px;
+    }
+    .visual-top strong {
+      font-size: 19px;
+      color: var(--green);
+    }
+    .visual-note {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .75);
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .nb-workspace {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid #d5e3db;
+      box-shadow: 0 18px 50px rgba(21, 70, 58, .13);
+      padding: 40px 58px 50px;
+    }
+    .r220e-document-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+    }
+    .r220e-document-head h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .r220e-candidate-status,
+    .r220e-compact-badge,
+    .r220e-confirm-inline {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid #c9ddd4;
+      background: var(--green-soft);
+      color: #217664;
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 2px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .r220e-candidate-status { margin: 2px 0 0; }
+    .r220e-confirm-inline {
+      margin-left: 8px;
+      border-color: #ead7a5;
+      background: #fff6d8;
+      color: #8a650e;
+      font-weight: 600;
+    }
+    .r220e-doc-section {
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0 22px;
+    }
+    .r220e-section-head,
+    .r220e-episode-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .r220e-section-head h2,
+    .r220e-episode-head h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .r220e-section-head h2 { font-size: 20px; }
+    .r220e-episode-head h3 { font-size: 18px; }
+    .r220e-section-list {
+      margin: 0;
+      padding-left: 30px;
+    }
+    .r220e-section-list li { margin: 6px 0; }
+    .r220e-readable-process {
+      display: grid;
+      gap: 18px;
+    }
+    .r220e-process-episode {
+      padding: 18px 0 16px;
+      border-bottom: 1px dashed #ceddd4;
+    }
+    .r220e-episode-core {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 7px 14px;
+      margin: 0;
+    }
+    .r220e-episode-core dt {
+      color: var(--green);
+      font-weight: 800;
+    }
+    .r220e-episode-core dd {
+      margin: 0;
+      min-width: 0;
+    }
+    details.r220e-folded-detail {
+      margin-top: 12px;
+      border-left: 3px solid #8dc5b7;
+      background: rgba(236, 246, 242, .6);
+      padding: 8px 12px 10px;
+    }
+    details.r220e-folded-detail summary {
+      cursor: pointer;
+      color: #277966;
+      font-weight: 800;
+    }
+    .r220e-folded-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 20px;
+      margin-top: 8px;
+      color: #41564e;
+      font-size: 14px;
+    }
+    .r220e-folded-grid p { margin: 0; }
+    .r220e-confirm-group {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #ddba63;
+      background: var(--warm);
+    }
+    .r220e-confirm-group h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #6d5210;
+    }
+    .r220e-confirm-group ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    @media (max-width: 760px) {
+      .visual-shell { padding: 14px; }
+      .nb-workspace { padding: 24px 20px; }
+      .r220e-document-head,
+      .r220e-section-head,
+      .r220e-episode-head,
+      .visual-top {
+        align-items: start;
+        flex-direction: column;
+      }
+      .r220e-episode-core { grid-template-columns: 1fr; }
+      .r220e-folded-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body data-r220e-p1-visual-harness="true">
+  <main class="visual-shell" data-visual-smoke-only="true">
+    <div class="visual-top">
+      <strong>备课室中间正文视觉 smoke</strong>
+      <span class="visual-note">只读片段截图，不接真实 route</span>
+    </div>
+    <div class="nb-workspace r220e-center-body" data-render-surface="lesson-body" data-render-slot="lesson-body" data-r220e-center-body-readonly="true" data-r220e-sample-id="plain_segment_weaving">
+  <article class="nb-doc r220e-lesson-document" data-render-surface="lesson-document" data-r220e-readonly-document="true">
+    <header class="r220e-document-head">
+      <h1>穿穿编编</h1>
+      <p class="r220e-candidate-status" data-r220e-candidate-status="true">系统候选，需教师确认</p>
+    </header>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="basis" data-r220e-section="basis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">一、本课依据</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>本课围绕编织历史、经纬交织原理和纸条编织练习展开，让学生从实物观察进入基本方法体验。</li>
+    <li>原文提供导入、历史介绍、认识经纬、教师示范、学生练习和小结六个环节，教学主线应从文化认识走向方法操作。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="analysis" data-r220e-section="analysis">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">二、学情分析</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>四年级学生能观察编织实物的纹理，也具备剪贴和纸条操作经验，但未必理解经线固定、纬线穿插形成图案的原理。</li>
+    <li>本课需要把历史介绍控制为短背景，把重点落到经纬关系、压一穿一方法和纸条练习中的手眼协调。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="goals" data-r220e-section="goals">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">三、教学目标</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>学生能观察编织实物，说出编织与生活用品或传统工艺之间的联系。</li>
+    <li>学生能区分经线和纬线，理解压一穿一形成交织纹样的基本方法。</li>
+    <li>学生能用纸条完成一段基本编织练习，并在小结中说出一个操作要点或困难。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="keypoints" data-r220e-section="keypoints">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">四、教学重难点</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>重点：认识经纬交织原理，并掌握纸条压一穿一的基本编织方法。</li>
+    <li>难点：保持纸条排列有序、松紧适度，并能用自己的操作过程说清经线和纬线的关系。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="preparation" data-r220e-section="preparation">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">五、教学准备</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>教师准备竹编、藤编或纸编实物/图片，经纬示意图，纸条编织步骤示范材料。</li>
+    <li>学生准备彩纸条、底纸、剪刀和胶棒，注意工具使用安全。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" id="nb-section-teaching-process" data-render-slot="teaching-process" data-r220e-section="teaching-process">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">六、教学过程</h2>
+  </div>
+  <div class="nb-readable-process r220e-readable-process" data-render-slot="teaching-process-episodes">
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>1. 导入</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能从编织实物中发现交错纹理，产生学习编织方法的兴趣。</dd>
+    <dt>教师组织</dt><dd>出示竹编或藤编实物，让学生先看用途，再观察表面的穿插纹理。</dd>
+    <dt>学生学习</dt><dd>观察实物，说出在哪里见过类似编织物，并指出交错纹理。</dd>
+    <dt>关键话术</dt><dd>它不是画出来的纹样，而是一条一条材料穿出来的。你能找到哪条在上、哪条在下吗？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能指出实物中的交错纹理。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>导入</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>2. 历史介绍</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能知道编织与生活、记录和装饰有关，理解它不是单纯手工小练习。</dd>
+    <dt>教师组织</dt><dd>用两三张图快速介绍编织从生活器物到纹样装饰的发展，不展开成大段讲授。</dd>
+    <dt>学生学习</dt><dd>听取背景，选择一个自己觉得有意思的编织用途或纹样来源。</dd>
+    <dt>关键话术</dt><dd>古人编席子是为了解决生活需要，后来这些交错纹理也变成了装饰。你觉得哪一种最接近今天的纸编？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出一个编织的生活用途或文化背景。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>历史介绍</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>3. 认识经纬</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能区分经线和纬线，理解纬线穿过经线形成交织关系。</dd>
+    <dt>教师组织</dt><dd>用示意图和纸条演示经线竖向固定、纬线横向穿插，强调上下交替。</dd>
+    <dt>学生学习</dt><dd>用手势或纸条模拟经纬方向，说出压一穿一的规律。</dd>
+    <dt>关键话术</dt><dd>竖着不动的是经线，横着来回穿的是纬线。下一格如果在上面，后一格应该在哪里？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能正确指出经线、纬线，并说出上下交替规律。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>认识经纬</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>4. 教师示范</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能看懂纸条编织的起步、穿插和收边方法。</dd>
+    <dt>教师组织</dt><dd>分步示范固定经线、穿入纬线、压一穿一和整理边缘，控制速度让学生看清手法。</dd>
+    <dt>学生学习</dt><dd>跟随示范在草稿纸上试做一到两步，并提出不清楚的位置。</dd>
+    <dt>关键话术</dt><dd>这一条穿过去时不要急着粘，先检查是不是一上一下交替，再把纸条推整齐。<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能完成一段压一穿一试排。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>教师示范</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>5. 学生练习</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能独立完成一段纸条编织，并调整纸条松紧和排列。</dd>
+    <dt>教师组织</dt><dd>巡视纸条方向、上下交替和边缘整理，针对错位处做局部示范。</dd>
+    <dt>学生学习</dt><dd>完成纸条编织练习，检查是否有连续压错或缝隙过大的问题。</dd>
+    <dt>关键话术</dt><dd>先别急着贴牢，沿着这一行检查：有没有连续两次都在上面？哪里需要推紧一点？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>作品中能看到经纬交织关系，且学生能指出一处调整过的地方。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>学生练习</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+<article class="r220e-process-episode" data-r220e-process-episode="true">
+  <div class="r220e-episode-head">
+    <h3>6. 小结</h3>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <dl class="r220e-episode-core">
+    <dt>环节目标</dt><dd>学生能用自己的话说出经纬关系和一个编织操作要点。</dd>
+    <dt>教师组织</dt><dd>组织学生展示练习片段，围绕经线、纬线、压一穿一和整理边缘做小结。</dd>
+    <dt>学生学习</dt><dd>展示练习，说出自己学会的一个方法和仍需改进的一处。</dd>
+    <dt>关键话术</dt><dd>今天你不是只完成了一张纸编，而是学会了经线和纬线怎样合作。你最容易出错的是哪一步？<span class="r220e-confirm-inline">需教师确认</span></dd>
+    <dt>核心证据</dt><dd>学生能说出一个经纬关系或操作要点。</dd>
+  </dl>
+  <details class="r220e-folded-detail" data-r220e-microstep-collapsed="true">
+    <summary>展开 micro-step、材料、支架和小教提醒</summary>
+    <div class="r220e-folded-grid">
+      <p><strong>小步骤</strong>小结</p>
+      <p><strong>材料</strong>编织实物或图片、纸条、底纸、胶棒</p>
+      <p><strong>支架</strong>用“经线固定、纬线穿插、上下交替”帮助学生检查编织步骤。</p>
+      <p><strong>小教提醒</strong>小教提醒教师先检查经纬方向，再处理纸条松紧。</p>
+    </div>
+  </details>
+</article>
+  </div>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="assessment" data-r220e-section="assessment">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">七、学习单与评价</h2>
+    <span class="r220e-compact-badge">候选</span>
+  </div>
+  <ol class="r220e-section-list">
+    <li>认知证据：学生能区分经线和纬线。</li>
+    <li>操作证据：纸条编织练习体现压一穿一的上下交替。</li>
+    <li>表达证据：学生能说出一个编织操作要点或困难。</li>
+  </ol>
+</section>
+<section class="nb-doc-section r220e-doc-section" data-render-slot="teacher-confirm-items" data-r220e-section="teacher-confirm-items">
+  <div class="nb-doc-section-head r220e-section-head">
+    <h2 class="nb-doc-title">八、待教师确认项</h2>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="必须确认">
+    <h3>必须确认</h3>
+    <ol>
+      <li>教材版本、册次、页码和学校实际进度需教师确认。</li>
+      <li>本课材料、工具数量和安全要求需按班级实际确认。</li>
+      <li>纸条尺寸、剪刀和胶棒使用规则需由教师确认。</li>
+    </ol>
+  </div>
+  <div class="r220e-confirm-group" data-r220e-confirm-group="建议确认">
+    <h3>建议确认</h3>
+    <ol>
+      <li>教学目标、重难点和准备为系统候选，需教师按学生情况调整。</li>
+      <li>关键话术为系统建议，需教师按自己的课堂语言改写。</li>
+    </ol>
+  </div>
+  <details class="r220e-folded-detail" data-r220e-confirm-diagnostic-collapsed="true">
+    <summary>可折叠诊断</summary>
+    <ol>
+      <li>本轮仅生成教师可读候选快照，不进入正式备课本。</li>
+    </ol>
+  </details>
+</section>
+  </article>
+</div>
+  </main>
+</body>
+</html>
